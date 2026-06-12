@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.routes import auth, users
+
 app = FastAPI(title="OAHS API")
 
 app.add_middleware(
@@ -11,12 +13,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
+app.include_router(users.router)
+
 
 @app.get("/api/health")
 def health():
     return {"status": "ok"}
-
-
-# Register routers here:
-# from app.routes import example
-# app.include_router(example.router, prefix="/api")
